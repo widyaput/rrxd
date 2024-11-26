@@ -83,14 +83,13 @@ fn preprocess_seek<R: Read + Seek>(reader: R, seek_pos: usize) -> BufReader<R> {
 }
 
 fn output_lines<R: Read>(
-    reader: R,
+    mut buffer: BufReader<R>,
     use_little_endian: bool,
     group: u8,
     limit: Option<usize>,
     column: usize,
     seek_pos: usize,
 ) {
-    let mut buffer = BufReader::new(reader);
     let mut raw_buffer: Vec<u8> = vec![0; column];
     let mut prefix = seek_pos;
     let mut local_group = group;
